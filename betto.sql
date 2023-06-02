@@ -62,7 +62,6 @@ create table Productos(
     CodigoProducto int not null ,
     NombreProducto varchar(100) not null ,
     ColorProducto varchar(100) not null ,
-    /*Modificar talla en el vertabelo se puso int*/
     TallaProducto varchar(5) not null ,
     CostoBase float,
     CodigoCategoria int not null ,
@@ -84,7 +83,6 @@ create table Telas_Productos(
 
 )
 select * from Telas_Productos
-/*Aqui me quede*/
 create table Detalles_Pedidos(
     CodigoProducto int not null ,
     CodigoPedido int not null ,
