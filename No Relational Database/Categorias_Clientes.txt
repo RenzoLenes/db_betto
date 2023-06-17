@@ -1,0 +1,100 @@
+// CREAR TABLA DE CATEGORIAS
+db.createCollection(
+    "categorias",
+    { validator:
+        { $jsonSchema:
+                {   bsonType: "object",
+                    description: "Document describing a category of dress",
+                    required: ["nombre", "descripcion"],
+                    properties:
+                        {   "nombre":{
+                            bsonType: "string",
+                            description: "Name of the category"
+                            },
+                            "descripcion": {
+                                bsonType: "string",
+                                description: "description of the category"
+                            },
+
+
+                         }
+                }
+        }
+    }
+);
+//INSERTAR DATO DE CATEGORIAS
+db.categorias.insertOne(
+{
+nombre:"camisa",
+descripcion:"prenda superior"
+}
+)
+
+//CREACIÓN DE LA TABLA CLIENTES
+db.createCollection(
+    "clientes",
+    { validator:
+        { $jsonSchema:
+                {   bsonType: "object",
+                    description: "Document describing a category of dress",
+                    required: ["nombre", "apellido","dni","celular","direccion"],
+                    properties:
+                        {   "nombre":{
+                            bsonType: "string",
+                            description: "Nombre del cliente"
+                            },
+                            "apellido": {
+                                bsonType: "string",
+                                description: "Apellido del cliente"
+                            },
+                            "dni":{
+                            bsonType: "string",
+                            description: "DNI del cliente"
+                            },
+                            "celular":{
+                            bsonType: "string",
+                            description: "Celular del cliente"
+
+                            },
+                            "direccion":{
+                             bsonType: "object",
+                             required: ["ciudad"],
+                                properties:{
+                                ciudad:{
+                                    bsonType:"string",
+                                    description:"Ciudad del cliente"
+                                },
+                                calle_1:{
+                                    bsonType:"string",
+                                    description:"Calle del cliente"
+                                },
+                                calle_2:{
+                                    bsonType:"string",
+                                    description:"Calle del cliente(opcional)"
+                                }
+
+
+                                }
+                            }
+
+
+                         }
+                }
+        }
+    }
+);
+
+//INSERTAR DATO DE CLIENTES
+db.clientes.insertOne({
+nombre:"Sergio",
+apellido:"Rueda",
+dni:"72627032",
+celular:"944-214-212",
+direccion:{
+ciudad:"Lima",
+calle_1:"Las moreras 12",
+calle_2:"Plaza Vitarte 42"
+}
+}
+)
+
