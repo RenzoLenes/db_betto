@@ -1,0 +1,495 @@
+use betto
+db.createCollection("Telas", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["CodigoTela", "CodigoProveedor"],
+      properties: {
+        _id: {
+          bsonType: "objectId",
+          description: "ID único del documento"
+        },
+        CodigoTela: {
+          bsonType: "int",
+          description: "Código de la tela"
+        },
+        NombreTela: {
+          bsonType: "string",
+          description: "Nombre de la tela"
+        },
+        CodigoProveedor: {
+          bsonType: "int",
+          description: "Código del proveedor"
+        },
+        Proveedor: {
+          bsonType: "objectId",
+          description: "Referencia al documento proveedor en la colección 'Proveedores'"
+        }
+      }
+    }
+  }
+});
+
+
+db.createCollection("pedidos",
+{
+    validator: {
+        $jsonSchema: {
+            bsonType : "object",
+            required: ["cliente_codigo","fecha_inicio","fecha_fin","detalles"],
+            properties: {
+                cliente_codigo: {
+                    bsonType: "int"
+                },
+                fecha_inicio: {
+                    bsonType: "date"
+                },
+                fecha_fin: {
+                    bsonType: "date"
+                },
+                detalles: {
+                    bsonType: "array",
+                    minItems: 1,
+                    items: {
+                        bsonType : "object",
+                        required : ["product_id","cantidad","precio_unidad"],
+                        properties: {
+                            product_id: {
+                                bsonType: "int"
+                            },
+                            cantidad: {
+                                bsonType: "int"
+                            },
+                            precio_unidad: {
+                                bsonType: "double"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+})
+
+db.createCollection(
+    "clientes",
+    { validator:
+        { $jsonSchema:
+                {   bsonType: "object",
+                    description: "Document describing a category of dress",
+                    required: ["nombre", "apellido","dni","celular","direccion"],
+                    properties:
+                        {   "nombre":{
+                            bsonType: "string",
+                            description: "Nombre del cliente"
+                            },
+                            "apellido": {
+                                bsonType: "string",
+                                description: "Apellido del cliente"
+                            },
+                            "dni":{
+                            bsonType: "string",
+                            description: "DNI del cliente"
+                            },
+                            "celular":{
+                            bsonType: "string",
+                            description: "Celular del cliente"
+
+                            },
+                            "direccion":{
+                             bsonType: "object",
+                             required: ["ciudad"],
+                                properties:{
+                                ciudad:{
+                                    bsonType:"string",
+                                    description:"Ciudad del cliente"
+                                },
+                                calle_1:{
+                                    bsonType:"string",
+                                    description:"Calle del cliente"
+                                },
+                                calle_2:{
+                                    bsonType:"string",
+                                    description:"Calle del cliente(opcional)"
+                                }
+                                }
+                            }
+                         }
+                }
+        }
+    });
+
+db.pedidos.insertOne({
+    cliente_codigo: 10,
+    fecha_inicio: ISODate("2023-05-26"),
+    fecha_fin: ISODate("2023-08-02"),
+    detalles: [{
+        product_id : 43,
+        cantidad: 30,
+        precio_unidad: 259.60,
+        descuento: 19.26
+    },
+    {
+        product_id : 9,
+        cantidad: 96,
+        precio_unidad: 371.50,
+        descuento: 18.16
+    }
+    ]
+});
+
+db.pedidos.insertOne({
+    cliente_codigo: 3,
+    fecha_inicio: ISODate("2023-05-03"),
+    fecha_fin: ISODate("2023-08-09"),
+    detalles: [{
+        product_id : 26,
+        cantidad: 92,
+        precio_unidad: 111.90,
+        descuento: 29.73,
+    },
+    {
+        product_id : 50,
+        cantidad: 21,
+        precio_unidad: 146.40,
+        descuento: 26.63
+    }
+    ]
+});
+
+db.pedidos.insertOne({
+    cliente_codigo: 5,
+    fecha_inicio: ISODate("2023-04-08"),
+    fecha_fin: ISODate("2023-07-14"),
+    detalles: [{
+        product_id : 10,
+        cantidad: 98,
+        precio_unidad: 203.60,
+        descuento: 20.85
+    },
+    {
+        product_id : 2,
+        cantidad: 90,
+        precio_unidad: 331.70,
+        descuento: 28.13
+    }
+    ]
+});
+
+db.pedidos.insertOne({
+    cliente_codigo: 7,
+    fecha_inicio: ISODate("2023-03-31"),
+    fecha_fin: ISODate("2023-05-29"),
+    detalles: [{
+        product_id : 35,
+        cantidad: 78,
+        precio_unidad: 210.2,
+        descuento: 12.77
+    },
+    {
+        product_id : 14,
+        cantidad: 28,
+        precio_unidad: 92.5,
+        descuento: 26.19
+    }
+    ]
+});
+
+db.pedidos.insertOne({
+    cliente_codigo: 8,
+    fecha_inicio: ISODate("2023-05-01"),
+    fecha_fin: ISODate("2023-08-21"),
+    detalles: [{
+        product_id : 37,
+        cantidad: 78,
+        precio_unidad: 326.60,
+        descuento: 28.27
+    },
+    {
+        product_id : 29,
+        cantidad: 82,
+        precio_unidad: 274.4,
+        descuento: 9.07
+    }
+    ]
+});
+
+db.pedidos.insertOne({
+    cliente_codigo: 9,
+    fecha_inicio: ISODate("2023-04-11"),
+    fecha_fin: ISODate("2023-06-10"),
+    detalles: [{
+        product_id : 28,
+        cantidad: 70,
+        precio_unidad: 14.67,
+        descuento: 22.4
+    },
+    {
+        product_id : 41,
+        cantidad: 88,
+        precio_unidad: 123.6,
+        descuento: 23.22
+    }
+    ]
+});
+
+db.pedidos.insertOne({
+    cliente_codigo: 6,
+    fecha_inicio: ISODate("2023-04-12"),
+    fecha_fin: ISODate("2023-06-08"),
+    detalles: [{
+        product_id : 13,
+        cantidad: 88,
+        precio_unidad: 153.7,
+        descuento: 15.48
+    },
+    {
+        product_id : 45,
+        cantidad: 65,
+        precio_unidad: 42.70,
+        descuento: 24.08
+    }
+    ]
+});
+
+db.pedidos.insertOne({
+    cliente_codigo: 4,
+    fecha_inicio: ISODate("2023-04-26"),
+    fecha_fin: ISODate("2023-06-16"),
+    detalles: [{
+        product_id : 31,
+        cantidad: 74,
+        precio_unidad: 379.50,
+        descuento: 29.42
+    },
+    {
+        product_id : 11,
+        cantidad: 93,
+        precio_unidad: 132.60,
+        descuento: 11.78
+    }
+    ]
+});
+
+db.pedidos.insertOne({
+    cliente_codigo: 2,
+    fecha_inicio: ISODate("2023-05-04"),
+    fecha_fin: ISODate("2023-08-17"),
+    detalles: [{
+        product_id : 26,
+        cantidad: 99,
+        precio_unidad: 367.80,
+        descuento: 40.36
+    },
+    {
+        product_id : 34,
+        cantidad: 49,
+        precio_unidad: 395.70,
+        descuento: 18.55
+    }
+    ]
+});
+
+db.pedidos.insertOne({
+    cliente_codigo: 11,
+    fecha_inicio: ISODate("2023-04-03"),
+    fecha_fin: ISODate("2023-07-07"),
+    detalles: [{
+        product_id : 7,
+        cantidad: 81,
+        precio_unidad: 26.7,
+        descuento: 24.8
+    },
+    {
+        product_id : 1,
+        cantidad: 88,
+        precio_unidad: 350.7,
+        descuento: 11.24
+    }
+    ]
+});
+
+
+db.Telas.insertOne({
+    CodigoTela: 1,
+    NombreTela: "Algodon Blanco",
+    CodigoProveedor: 13,
+});
+
+db.Telas.insertOne({
+    CodigoTela: 2,
+    NombreTela: "Lino beige",
+    CodigoProveedor: 13,
+});
+
+db.Telas.insertOne({
+    CodigoTela: 4,
+    NombreTela: "Terciopelo rojo",
+    CodigoProveedor: 2,
+});
+
+db.Telas.insertOne({
+    CodigoTela: 5,
+    NombreTela: "Cuero marron",
+    CodigoProveedor: 4,
+});
+
+db.Telas.insertOne({
+    CodigoTela: 12,
+    NombreTela: "Tul rosa",
+    CodigoProveedor: 16,
+});
+
+db.Telas.insertOne({
+    CodigoTela: 13,
+    NombreTela: "Tela vaquera",
+    CodigoProveedor: 9,
+});
+
+db.Telas.insertOne({
+    CodigoTela: 16,
+    NombreTela: "Seda blanca",
+    CodigoProveedor: 1,
+});
+
+db.Telas.insertOne({
+    CodigoTela: 17,
+    NombreTela: "Algodon Negro",
+    CodigoProveedor: 20,
+});
+
+db.Telas.insertOne({
+    CodigoTela: 18,
+    NombreTela: "Lino gris",
+    CodigoProveedor: 11,
+});
+
+db.Telas.insertOne({
+    CodigoTela: 20,
+    NombreTela: "Seda rosa",
+    CodigoProveedor: 8,
+});
+
+
+db.clientes.insertOne({
+_id : 11,
+nombre:"Goddard",
+apellido:"Pooley",
+dni:"11079584",
+celular:"942-352-657",
+    direccion:{
+    ciudad:"Juliaca",
+    calle_1:"125 Mendota Court"
+    }
+});
+
+db.clientes.insertOne({
+_id : 2,
+nombre:"Ardelis",
+apellido:"Cadle",
+dni:"29460682",
+celular:"958-958-218",
+    direccion:{
+    ciudad:"Tumbes",
+    calle_1:"74314 Spohn Point"
+    }
+});
+
+db.clientes.insertOne({
+_id : 3,
+nombre:"Nickie",
+apellido:"Townes",
+dni:"24604299",
+celular:"926-850-731",
+    direccion:{
+    ciudad:"Moquegua",
+    calle_1:"551 Shasta Pass"
+    }
+});
+
+db.clientes.insertOne({
+_id : 4,
+nombre:"Minda",
+apellido:"Vaugham",
+dni:"76726094",
+celular:"951-633-992",
+    direccion:{
+    ciudad:"Iquitos",
+    calle_1:"7 Annamark Trail"
+    }
+});
+
+db.clientes.insertOne({
+_id : 5,
+nombre:"Phoebe",
+apellido:"Bende",
+dni:"41564726",
+celular:"941-609-283",
+    direccion:{
+    ciudad:"Tarapoto",
+    calle_1:"3 Armistice Alley"
+    }
+});
+
+db.clientes.insertOne({
+_id : 6,
+nombre:"Torin",
+apellido:"Abotson",
+dni:"18627585",
+celular:"933-738-279",
+    direccion:{
+    ciudad:"Ayacucho",
+    calle_1:"0396 Crescent Oaks Hill"
+    }
+});
+
+db.clientes.insertOne({
+_id : 7,
+nombre:"Hillie",
+apellido:"Itzchaky",
+dni:"31649885",
+celular:"958-220-722",
+    direccion:{
+    ciudad:"Tacna",
+    calle_1:"57963 Vermont Circle"
+    }
+});
+
+db.clientes.insertOne({
+_id : 8,
+nombre:"Helena",
+apellido:"Zanotti",
+dni:"93951297",
+celular:"900-265-432",
+    direccion:{
+    ciudad:"Huaraz",
+    calle_1:"1661 Westport Crossing"
+    }
+});
+
+db.clientes.insertOne({
+_id : 9,
+nombre:"Geoffry",
+apellido:"Wiffen",
+dni:"14435462",
+celular:"976-196-672",
+    direccion:{
+    ciudad:"Puno",
+    calle_1:"69 Dahle Pass"
+    }
+});
+
+db.clientes.insertOne({
+_id : 10,
+nombre:"Gasparo",
+apellido:"Davidovics",
+dni:"50287625",
+celular:"990-652-906",
+    direccion:{
+    ciudad:"Huancayo",
+    calle_1:"7493 Westerfield Place"
+    }
+});
+
+
+
